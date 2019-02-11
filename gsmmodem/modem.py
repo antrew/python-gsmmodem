@@ -281,7 +281,7 @@ class GsmModem(SerialComms):
                 # See if this is a ZTE modem that has not yet been identified based on supported commands
                 try:
                     self.write('AT+ZPAS?')
-                except CommandError:
+                except (CommandError, TimeoutException):
                     pass # Not a ZTE modem
                 else:
                     callUpdateTableHint = 3 # ZTE
