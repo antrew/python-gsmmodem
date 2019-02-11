@@ -338,10 +338,10 @@ class GsmModem(SerialComms):
         # Some modems delete the SMSC number when setting text-mode SMS parameters; preserve it if needed
         if currentSmscNumber != None:
             self._smscNumber = None # clear cache
-        if self.requestDelivery:
-            self.write('AT+CSMP=49,167,0,0', parseError=False) # Enable delivery reports
-        else:
-            self.write('AT+CSMP=17,167,0,0', parseError=False) # Not enable delivery reports
+        # if self.requestDelivery:
+        #     self.write('AT+CSMP=49,167,0,0', parseError=False) # Enable delivery reports
+        # else:
+        #     self.write('AT+CSMP=17,167,0,0', parseError=False) # Not enable delivery reports
         # ...check SMSC again to ensure it did not change
         if currentSmscNumber != None and self.smsc != currentSmscNumber:
             self.smsc = currentSmscNumber
