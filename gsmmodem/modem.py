@@ -380,10 +380,10 @@ class GsmModem(SerialComms):
         if self._smsReadSupported and (self.smsReceivedCallback or self.smsStatusReportCallback):
             try:
                 self.write('AT+CNMI=' + self.AT_CNMI)  # Set message notifications
-            except CommandError:
+            except (CommandError, TimeoutException):
                 try:
                     self.write('AT+CNMI=2,1,0,1,0') # Set message notifications, using TE for delivery reports <ds>
-                except CommandError:
+                except (CommandError, TimeoutException):
                     # Message notifications not supported
                     self._smsReadSupported = False
                     self.log.warning('Incoming SMS notifications not supported by modem. SMS receiving unavailable.')
@@ -405,7 +405,10 @@ class GsmModem(SerialComms):
                 self._extendedIncomingCallIndication = True
 
         # Call control setup
-        self.write('AT+CVHU=0', parseError=False) # Enable call hang-up with ATH command (ignore if command not supported)
+        try:
+            self.write('AT+CVHU=0', parseError=False) # Enable call hang-up with ATH command (ignore if command not supported)
+        except TimeoutException:
+            pass
 
     def _unlockSim(self, pin):
         """ Unlocks the SIM card using the specified PIN (if necessary, else does nothing) """
