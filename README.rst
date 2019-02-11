@@ -111,8 +111,8 @@ To manually build or test the documentation locally, do the following::
 
    git clone https://github.com/babca/python-gsmmodem.git
    cd python-gsmmodem
-   pip install .[doc]
-   cd doc
+   pip install .[docs]
+   cd docs
    make html
 
 For true isolation, you may wish to run the above commands within a
