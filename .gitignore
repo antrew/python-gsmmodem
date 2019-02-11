@@ -30,3 +30,4 @@ htmlcov
 *.swp
 
 .DS_Store
+/venv/
